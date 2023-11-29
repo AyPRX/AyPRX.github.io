@@ -124,8 +124,8 @@
       var screenWidth = window.innerWidth;
       var screenHeight = window.innerHeight;
 
-      var left = Math.random() * (screenWidth - 100) + "px"; // 50 pour éviter de dépasser les bords
-      var top = Math.random() * (screenHeight - 600) + "px";
+      var left = Math.random() * (screenWidth - 250) + "px"; // 50 pour éviter de dépasser les bords
+      var top = Math.random() * (screenHeight - 750) + "px";
 
       return { left: left, top: top };
     }
@@ -160,7 +160,7 @@
 
       var matrixBackground = document.body;
 
-      if (document.querySelectorAll(".matrix-photo").length < 3) {
+      if (document.querySelectorAll(".matrix-photo").length < 2) {
         var photoUrl = photoUrls[Math.floor(Math.random() * photoUrls.length)];
 
         var photoImg = new Image();
