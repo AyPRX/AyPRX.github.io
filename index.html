@@ -1,20 +1,158 @@
-<script>
-  // Fonction pour mettre à jour le compte à rebours
-  function updateCountdown() {
-    // ... (le reste du code reste inchangé)
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compte à Rebours</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      margin: 0;
+      overflow: hidden; /* Empêcher le défilement vertical */
+      background-color: black; /* Fond noir */
+      color: #00FF00; /* Texte vert */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
 
-  // Fonction pour ajouter des symboles de la matrice de manière aléatoire
-  function addMatrixSymbols() {
-    // ... (le reste du code reste inchangé)
-  }
+    #countdown {
+      font-size: 1.75em; /* 75% plus grand */
+      z-index: 1;
+    }
 
-  // Fonction pour ajouter des images aléatoires
-  function addMatrixPhotos() {
-    // ... (le reste du code reste inchangé)
-  }
+    /* Style des symboles de la matrice */
+    .matrix-symbol {
+      position: absolute;
+      color: #00FF00; /* Vert */
+      font-size: 20px;
+      line-height: 20px;
+      font-family: 'Courier New', Courier, monospace; /* Police réaliste de la matrice */
+      animation: matrix-symbol-fall 3s linear infinite; /* Animation un peu plus rapide */
+      text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00; /* Effet de lueur */
+    }
 
-  // Fonction pour afficher la vidéo à la fin du compte à rebours
+    /* Animation des symboles de la matrice avec variations de vitesse */
+    @keyframes matrix-symbol-fall {
+      from {
+        transform: translateY(-100vh);
+        opacity: 0.8;
+      }
+      to {
+        transform: translateY(100vh);
+        opacity: 0.1;
+      }
+    }
+
+    /* Style des images aléatoires */
+    .matrix-photo {
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      opacity: 1;
+      animation: matrix-photo-fade 5s linear;
+      box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00; /* Effet de lueur sur les photos */
+    }
+
+    /* Animation de la disparition des images */
+    @keyframes matrix-photo-fade {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    /* Style de la vidéo à la fin du compte à rebours */
+    #end-video {
+      display: none; /* Caché au début */
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+    }
+  </style>
+
+  <script>
+    // Fonction pour mettre à jour le compte à rebours
+    function updateCountdown() {
+      var targetDate = new Date("December 31, 2023 23:59:59").getTime(); // Date et heure cible
+      var currentDate = new Date().getTime(); // Date et heure actuelles
+      var timeDifference = targetDate - currentDate;
+
+      var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
+
+      if (timeDifference < 0) {
+        document.getElementById("countdown").innerHTML = "Le compte à rebours est terminé!";
+        showEndVideo(); // Afficher la vidéo à la fin du compte à rebours
+      }
+    }
+
+    // Fonction pour ajouter des symboles de la matrice de manière aléatoire
+    function addMatrixSymbols() {
+      var symbols = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_-+=[]{}|;:,.<>?";
+      var matrixBackground = document.body;
+
+      for (var i = 0; i < 1000; i++) {
+        var symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
+        var animationDuration = (Math.random() * 2 + 1) + "s"; // Générer une durée aléatoire
+
+        // Créer le symbole
+        var symbolSpan = document.createElement("span");
+        symbolSpan.className = "matrix-symbol";
+        symbolSpan.textContent = symbol;
+        symbolSpan.style.left = Math.random() * 100 + "vw";
+        symbolSpan.style.animationDuration = animationDuration;
+        matrixBackground.appendChild(symbolSpan);
+      }
+    }
+
+    // Fonction pour ajouter des images aléatoires
+    function addMatrixPhotos() {
+      var photoUrls = [
+        "url_de_votre_photo_1.jpg",
+        "url_de_votre_photo_2.jpg",
+        // Ajoutez d'autres URL de photos selon vos besoins
+      ];
+
+      var matrixBackground = document.body;
+
+      // Ne pas afficher plus de 3 images simultanément
+      if (document.querySelectorAll(".matrix-photo").length < 3) {
+        var photoUrl = photoUrls[Math.floor(Math.random() * photoUrls.length)];
+        var sizePercentage = Math.floor(Math.random() * (50 - 30) + 30); // Taille aléatoire entre 30% et 50%
+
+        // Créer l'image
+        var photoImg = document.createElement("img");
+        photoImg.className = "matrix-photo";
+        photoImg.src = photoUrl;
+
+        // Positions aléatoires à l'intérieur de l'écran
+        photoImg.style.left = Math.random() * (window.innerWidth - 100) + "px";
+        photoImg.style.top = Math.random() * (window.innerHeight - 100) + "px";
+
+        photoImg.style.width = sizePercentage + "%";
+        photoImg.style.height = sizePercentage + "%";
+        matrixBackground.appendChild(photoImg);
+
+        // Supprimer l'image après 5 secondes
+        setTimeout(function() {
+          matrixBackground.removeChild(photoImg);
+        }, 5000);
+      }
+    }
+
+    // Fonction pour afficher la vidéo à la fin du compte à rebours
   function showEndVideo() {
     var matrixSymbols = document.querySelectorAll(".matrix-symbol");
     var matrixPhotos = document.querySelectorAll(".matrix-photo");
@@ -43,8 +181,8 @@
   // Fonction pour choisir aléatoirement un fichier audio
   function getRandomAudio() {
     var audioFiles = [
-      "AyPRX.github.io/Music_1.mp3",
-      "AyPRX.github.io/Music_1.mp3",
+      "url_de_votre_audio_1.mp3",
+      "url_de_votre_audio_2.mp3",
       // Ajoutez d'autres URL de fichiers audio selon vos besoins
     ];
 
@@ -67,3 +205,6 @@
     audio.addEventListener("ended", showEndVideo);
   };
 </script>
+
+
+  
