@@ -53,17 +53,7 @@
     .matrix-photo {
       position: absolute;
       opacity: 1;
-      animation: matrix-photo-fade 5s linear;
       box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00; /* Effet de lueur sur les photos */
-    }
-
-    @keyframes matrix-photo-fade {
-      from {
-        opacity: 1;
-      }
-      to {
-        opacity: 0;
-      }
     }
 
     #end-video {
@@ -113,6 +103,12 @@
       }
     }
 
+    function getRandomPosition() {
+      var left = Math.random() * 100 + "vw";
+      var top = Math.random() * 100 + "vh";
+      return { left: left, top: top };
+    }
+
     function addMatrixPhotos() {
       var photoUrls = [
         "https://AyPRX.github.io/1.png",
@@ -124,22 +120,16 @@
 
       if (document.querySelectorAll(".matrix-photo").length < 3) {
         var photoUrl = photoUrls[Math.floor(Math.random() * photoUrls.length)];
-        var sizePercentage = Math.floor(Math.random() * (50 - 30) + 30);
 
         var photoImg = new Image();
         photoImg.className = "matrix-photo";
         photoImg.src = photoUrl;
 
         photoImg.onload = function () {
-          var aspectRatio = photoImg.width / photoImg.height;
-          var width = sizePercentage;
-          var height = sizePercentage / aspectRatio;
+          var position = getRandomPosition();
 
-          photoImg.style.width = width + "%";
-          photoImg.style.height = height + "%";
-
-          photoImg.style.left = Math.random() * (window.innerWidth - width) + "px";
-          photoImg.style.top = Math.random() * (window.innerHeight - height) + "px";
+          photoImg.style.left = position.left;
+          photoImg.style.top = position.top;
 
           matrixBackground.appendChild(photoImg);
 
@@ -189,11 +179,7 @@
 
       var audio = new Audio(getRandomAudio());
       audio.loop = true;
-
-      document.addEventListener("click", function () {
-        audio.play();
-        document.removeEventListener("click", arguments.callee);
-      });
+      audio.play(); // Lancement automatique du son dès le chargement de la page
 
       audio.addEventListener("ended", showEndVideo);
     };
