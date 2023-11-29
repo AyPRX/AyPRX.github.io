@@ -183,7 +183,6 @@
     }
 
     window.onload = function () {
-      audio.play();
       addMatrixSymbols();
       setInterval(addMatrixPhotos, 5000);
       setInterval(updateCountdown, 1000);
@@ -192,6 +191,7 @@
       audio.loop = true;
 
       document.addEventListener("click", function () {
+        audio.play();
         document.removeEventListener("click", arguments.callee);
       });
 
