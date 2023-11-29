@@ -16,11 +16,17 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      flex-direction: column; /* Ajout pour empiler les éléments verticalement */
     }
 
     #countdown {
       font-size: 1.75em;
       z-index: 1;
+    }
+
+    #launch-text {
+      font-size: 1.5em;
+      margin-bottom: 20px; /* Espacement par rapport au compte à rebours */
     }
 
     .matrix-symbol {
@@ -29,7 +35,7 @@
       font-size: 20px;
       line-height: 20px;
       font-family: 'Courier New', Courier, monospace; /* Police réaliste de la matrice */
-      animation: matrix-symbol-fall 3s linear infinite; /* Animation un peu plus rapide */
+      animation: matrix-symbol-fall 3s linear infinite;
       text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00; /* Effet de lueur */
     }
 
@@ -120,25 +126,27 @@
         var photoUrl = photoUrls[Math.floor(Math.random() * photoUrls.length)];
         var sizePercentage = Math.floor(Math.random() * (50 - 30) + 30);
 
-        var photoImg = document.createElement("img");
+        var photoImg = new Image();
         photoImg.className = "matrix-photo";
         photoImg.src = photoUrl;
 
-        photoImg.style.left = Math.random() * (window.innerWidth - 100) + "px";
-        photoImg.style.top = Math.random() * (window.innerHeight - 100) + "px";
+        photoImg.onload = function () {
+          var aspectRatio = photoImg.width / photoImg.height;
+          var width = sizePercentage;
+          var height = sizePercentage / aspectRatio;
 
-        var aspectRatio = photoImg.naturalWidth / photoImg.naturalHeight;
-        var width = sizePercentage;
-        var height = sizePercentage / aspectRatio;
+          photoImg.style.width = width + "%";
+          photoImg.style.height = height + "%";
 
-        photoImg.style.width = width + "%";
-        photoImg.style.height = height + "%";
+          photoImg.style.left = Math.random() * (window.innerWidth - width) + "px";
+          photoImg.style.top = Math.random() * (window.innerHeight - height) + "px";
 
-        matrixBackground.appendChild(photoImg);
+          matrixBackground.appendChild(photoImg);
 
-        setTimeout(function () {
-          matrixBackground.removeChild(photoImg);
-        }, 5000);
+          setTimeout(function () {
+            matrixBackground.removeChild(photoImg);
+          }, 5000);
+        };
       }
     }
 
@@ -175,10 +183,10 @@
     }
 
     window.onload = function () {
+      audio.play();
       addMatrixSymbols();
       setInterval(addMatrixPhotos, 5000);
       setInterval(updateCountdown, 1000);
-      audio.play();
 
       var audio = new Audio(getRandomAudio());
       audio.loop = true;
@@ -193,6 +201,7 @@
 </head>
 <body>
 
+  <h1 id="launch-text">Lancement du projet "BlueMen" dans :</h1>
   <h1 id="countdown">Compte à Rebours</h1>
 
   <video id="end-video" src="url_de_votre_video.mp4" autoplay loop muted></video>
