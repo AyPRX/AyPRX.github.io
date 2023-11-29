@@ -22,11 +22,19 @@
     #countdown {
       font-size: 1.75em;
       z-index: 1;
+      display: none;
     }
 
     #launch-text {
       font-size: 1.5em;
       margin-bottom: 20px; /* Espacement par rapport au compte à rebours */
+      display: none;
+    }
+
+    #start-image {
+      cursor: pointer;
+      width: 200px;
+      height: 200px;
     }
 
     .matrix-symbol {
@@ -111,8 +119,8 @@
 
     function addMatrixPhotos() {
       var photoUrls = [
-        "https://AyPRX.github.io/1.png",
-        "https://AyPRX.github.io/2.png",
+        "url_de_votre_photo_1.jpg",
+        "url_de_votre_photo_2.jpg",
         // Ajoutez d'autres URL de photos selon vos besoins
       ];
 
@@ -172,21 +180,29 @@
       return audioFiles[randomIndex];
     }
 
-    window.onload = function () {
+    function startEffects() {
+      // Afficher les éléments une fois que l'utilisateur a cliqué sur l'image
+      document.getElementById("countdown").style.display = "block";
+      document.getElementById("launch-text").style.display = "block";
+
+      // Lancer l'audio
+      var audio = new Audio(getRandomAudio());
+      audio.loop = true;
+      audio.play();
+
+      // Lancer les effets de matrice
       addMatrixSymbols();
       setInterval(addMatrixPhotos, 5000);
       setInterval(updateCountdown, 1000);
-
-      var audio = new Audio(getRandomAudio());
-      audio.loop = true;
-      audio.play(); // Lancement automatique du son dès le chargement de la page
-
-      audio.addEventListener("ended", showEndVideo);
-    };
+    }
   </script>
 </head>
 <body>
 
+  <!-- Image initiale pour démarrer les effets -->
+  <img id="start-image" src="url_de_votre_image.jpg" alt="Start Image" onclick="startEffects()">
+
+  <!-- Compte à rebours et autres éléments cachés initialement -->
   <h1 id="launch-text">Lancement du projet "BlueMen" dans :</h1>
   <h1 id="countdown">Compte à Rebours</h1>
 
