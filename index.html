@@ -69,8 +69,8 @@
     /* Style de la vidéo à la fin du compte à rebours */
     #end-video {
       display: none; /* Caché au début */
-      width: 25%;
-      height: 25%;
+      width: 100%;
+      height: 100%;
       position: fixed;
       top: 0;
       left: 0;
@@ -128,9 +128,9 @@
       var matrixBackground = document.body;
 
       // Ne pas afficher plus de 3 images simultanément
-      if (document.querySelectorAll(".matrix-photo").length < 3) {
+      if (document.querySelectorAll(".matrix-photo").length < 5) {
         var photoUrl = photoUrls[Math.floor(Math.random() * photoUrls.length)];
-        var sizePercentage = Math.floor(Math.random() * (50 - 30) + 30); // Taille aléatoire entre 30% et 50%
+        var sizePercentage = Math.floor(Math.random() * (25 - 25) + 30); // Taille aléatoire entre 30% et 50%
 
         // Créer l'image
         var photoImg = document.createElement("img");
