@@ -161,7 +161,7 @@
 
       var matrixBackground = document.body;
 
-      if (document.querySelectorAll(".matrix-photo").length < &) {
+      if (document.querySelectorAll(".matrix-photo").length < 3) {
         var photoUrl = photoUrls[Math.floor(Math.random() * photoUrls.length)];
 
         var photoImg = new Image();
@@ -181,7 +181,7 @@
 
           setTimeout(function () {
             matrixBackground.removeChild(photoImg);
-          }, 12000);
+          }, 7500);
         };
       }
     }
