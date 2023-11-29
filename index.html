@@ -63,7 +63,7 @@
 
     .matrix-photo {
       position: absolute;
-      opacity: 1;
+      opacity: 0;
       box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00; /* Effet de lueur sur les photos */
       transform-origin: top left; /* Définir le point d'origine de la transformation au centre de l'image */
       transition: transform 3s ease-in-out; /* Ajouter une transition pour une animation fluide */
@@ -161,7 +161,7 @@
 
       var matrixBackground = document.body;
 
-      if (document.querySelectorAll(".matrix-photo").length < 3) {
+      if (document.querySelectorAll(".matrix-photo").length < &) {
         var photoUrl = photoUrls[Math.floor(Math.random() * photoUrls.length)];
 
         var photoImg = new Image();
@@ -181,7 +181,7 @@
 
           setTimeout(function () {
             matrixBackground.removeChild(photoImg);
-          }, 7500);
+          }, 12000);
         };
       }
     }
