@@ -27,7 +27,7 @@
     }
 
     #launch-text {
-      font-size: 1em;
+      font-size: 2em;
       z-index: 1;
       margin-bottom: 15px; /* Espacement par rapport au compte à rebours */
       display: none;
@@ -126,7 +126,7 @@
       var screenHeight = window.innerHeight;
 
       var left = Math.random() * (screenWidth - 250) + "px"; // 50 pour éviter de dépasser les bords
-      var top = Math.random() * (screenHeight - 750) + "px";
+      var top = Math.random() * (screenHeight - 500) + "px";
 
       return { left: left, top: top };
     }
@@ -161,7 +161,7 @@
 
       var matrixBackground = document.body;
 
-      if (document.querySelectorAll(".matrix-photo").length < 2) {
+      if (document.querySelectorAll(".matrix-photo").length < 3) {
         var photoUrl = photoUrls[Math.floor(Math.random() * photoUrls.length)];
 
         var photoImg = new Image();
