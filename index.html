@@ -62,6 +62,13 @@
       position: absolute;
       opacity: 1;
       box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00; /* Effet de lueur sur les photos */
+      transform-origin: center; /* Définir le point d'origine de la transformation au centre de l'image */
+      transition: transform 0.5s ease-in-out; /* Ajouter une transition pour une animation fluide */
+    }
+
+    /* Appliquer une échelle de 0.5 (50%) aux images */
+    .matrix-photo.scaled {
+      transform: scale(0.5);
     }
 
     #end-video {
@@ -124,7 +131,7 @@
     function addMatrixPhotos() {
       var photoUrls = [
         "https://AyPRX.github.io/1.png",
-        "https://AyPRX.github.io/2.pngg",
+        "https://AyPRX.github.io/2.png",
         // Ajoutez d'autres URL de photos selon vos besoins
       ];
 
@@ -142,6 +149,9 @@
 
           photoImg.style.left = position.left;
           photoImg.style.top = position.top;
+
+          // Appliquer l'échelle à l'image
+          photoImg.classList.add("scaled");
 
           matrixBackground.appendChild(photoImg);
 
