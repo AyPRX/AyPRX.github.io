@@ -9,7 +9,7 @@
       font-family: 'Courier New', Courier, monospace;
       text-align: center;
       margin: 0;
-      overflow: hidden; /* Empêcher le défilement vertical */
+      overflow: hidden;
       background-color: black; /* Fond noir */
       color: #00FF00; /* Texte vert */
       display: flex;
@@ -19,11 +19,10 @@
     }
 
     #countdown {
-      font-size: 1.75em; /* 75% plus grand */
+      font-size: 1.75em;
       z-index: 1;
     }
 
-    /* Style des symboles de la matrice */
     .matrix-symbol {
       position: absolute;
       color: #00FF00; /* Vert */
@@ -34,7 +33,6 @@
       text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00; /* Effet de lueur */
     }
 
-    /* Animation des symboles de la matrice avec variations de vitesse */
     @keyframes matrix-symbol-fall {
       from {
         transform: translateY(-100vh);
@@ -46,17 +44,13 @@
       }
     }
 
-    /* Style des images aléatoires */
     .matrix-photo {
       position: absolute;
-      max-width: 100%;
-      max-height: 100%;
       opacity: 1;
       animation: matrix-photo-fade 5s linear;
       box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00; /* Effet de lueur sur les photos */
     }
 
-    /* Animation de la disparition des images */
     @keyframes matrix-photo-fade {
       from {
         opacity: 1;
@@ -66,9 +60,8 @@
       }
     }
 
-    /* Style de la vidéo à la fin du compte à rebours */
     #end-video {
-      display: none; /* Caché au début */
+      display: none;
       width: 100%;
       height: 100%;
       position: fixed;
@@ -79,10 +72,9 @@
   </style>
 
   <script>
-    // Fonction pour mettre à jour le compte à rebours
     function updateCountdown() {
-      var targetDate = new Date("December 31, 2023 23:59:59").getTime(); // Date et heure cible
-      var currentDate = new Date().getTime(); // Date et heure actuelles
+      var targetDate = new Date("December 31, 2023 23:59:59").getTime();
+      var currentDate = new Date().getTime();
       var timeDifference = targetDate - currentDate;
 
       var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -94,20 +86,18 @@
 
       if (timeDifference < 0) {
         document.getElementById("countdown").innerHTML = "Le compte à rebours est terminé!";
-        showEndVideo(); // Afficher la vidéo à la fin du compte à rebours
+        showEndVideo();
       }
     }
 
-    // Fonction pour ajouter des symboles de la matrice de manière aléatoire
     function addMatrixSymbols() {
       var symbols = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_-+=[]{}|;:,.<>?";
       var matrixBackground = document.body;
 
       for (var i = 0; i < 1000; i++) {
         var symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
-        var animationDuration = (Math.random() * 2 + 1) + "s"; // Générer une durée aléatoire
+        var animationDuration = (Math.random() * 2 + 1) + "s";
 
-        // Créer le symbole
         var symbolSpan = document.createElement("span");
         symbolSpan.className = "matrix-symbol";
         symbolSpan.textContent = symbol;
@@ -117,7 +107,6 @@
       }
     }
 
-    // Fonction pour ajouter des images aléatoires
     function addMatrixPhotos() {
       var photoUrls = [
         "url_de_votre_photo_1.jpg",
@@ -127,62 +116,57 @@
 
       var matrixBackground = document.body;
 
-      // Ne pas afficher plus de 3 images simultanément
       if (document.querySelectorAll(".matrix-photo").length < 3) {
         var photoUrl = photoUrls[Math.floor(Math.random() * photoUrls.length)];
-        var sizePercentage = Math.floor(Math.random() * (50 - 30) + 30); // Taille aléatoire entre 30% et 50%
+        var sizePercentage = Math.floor(Math.random() * (50 - 30) + 30);
 
-        // Créer l'image
         var photoImg = document.createElement("img");
         photoImg.className = "matrix-photo";
         photoImg.src = photoUrl;
 
-        // Positions aléatoires à l'intérieur de l'écran
         photoImg.style.left = Math.random() * (window.innerWidth - 100) + "px";
         photoImg.style.top = Math.random() * (window.innerHeight - 100) + "px";
 
-        photoImg.style.width = sizePercentage + "%";
-        photoImg.style.height = sizePercentage + "%";
+        var aspectRatio = photoImg.naturalWidth / photoImg.naturalHeight;
+        var width = sizePercentage;
+        var height = sizePercentage / aspectRatio;
+
+        photoImg.style.width = width + "%";
+        photoImg.style.height = height + "%";
+
         matrixBackground.appendChild(photoImg);
 
-        // Supprimer l'image après 5 secondes
         setTimeout(function () {
           matrixBackground.removeChild(photoImg);
         }, 5000);
       }
     }
 
-    // Fonction pour afficher la vidéo à la fin du compte à rebours
     function showEndVideo() {
       var matrixSymbols = document.querySelectorAll(".matrix-symbol");
       var matrixPhotos = document.querySelectorAll(".matrix-photo");
-      var audio = document.querySelector("audio");
 
-      // Supprimer tous les symboles de la matrice
       matrixSymbols.forEach(function (symbol) {
         symbol.remove();
       });
 
-      // Supprimer toutes les images
       matrixPhotos.forEach(function (photo) {
         photo.remove();
       });
 
-      // Arrêter l'audio
+      var audio = document.querySelector("audio");
       audio.pause();
-      audio.currentTime = 0; // Remettre la piste audio au début
+      audio.currentTime = 0;
 
-      // Afficher la vidéo
       var video = document.getElementById("end-video");
       video.style.display = "block";
-      video.play(); // Démarrer la vidéo
+      video.play();
     }
 
-    // Fonction pour choisir aléatoirement un fichier audio
     function getRandomAudio() {
       var audioFiles = [
-        "https://od.lk/s/M18yOTY3OTQ3NjFf/Music_1.mp3",
-        "https://od.lk/s/M18yOTY3OTQ3NjFf/Music_1.mp3",
+        "url_de_votre_audio_1.mp3",
+        "url_de_votre_audio_2.mp3",
         // Ajoutez d'autres URL de fichiers audio selon vos besoins
       ];
 
@@ -190,18 +174,19 @@
       return audioFiles[randomIndex];
     }
 
-    // Appeler les fonctions après le chargement de la page
     window.onload = function () {
       addMatrixSymbols();
-      setInterval(addMatrixPhotos, 5000); // Ajouter une image toutes les 5 secondes
+      setInterval(addMatrixPhotos, 5000);
       setInterval(updateCountdown, 1000);
 
-      // Lancer l'audio aléatoire
       var audio = new Audio(getRandomAudio());
-      audio.loop = true; // Pour le faire jouer en boucle
-      audio.play();
+      audio.loop = true;
 
-      // Associer l'élément audio à la fonction showEndVideo lorsque la lecture est terminée
+      document.addEventListener("click", function () {
+        audio.play();
+        document.removeEventListener("click", arguments.callee);
+      });
+
       audio.addEventListener("ended", showEndVideo);
     };
   </script>
@@ -210,8 +195,12 @@
 
   <h1 id="countdown">Compte à Rebours</h1>
 
-  <!-- Vidéo à la fin du compte à rebours -->
   <video id="end-video" src="url_de_votre_video.mp4" autoplay loop muted></video>
+
+  <audio style="display: none;" preload="auto" controls>
+    <source src="url_de_votre_audio.mp3" type="audio/mp3">
+    <!-- Ajoutez d'autres sources audio si nécessaire -->
+  </audio>
 
 </body>
 </html>
