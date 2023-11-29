@@ -169,3 +169,49 @@
       });
 
       // Arrêter l'audio
+      audio.pause();
+      audio.currentTime = 0; // Remettre la piste audio au début
+
+      // Afficher la vidéo
+      var video = document.getElementById("end-video");
+      video.style.display = "block";
+      video.play(); // Démarrer la vidéo
+    }
+
+    // Fonction pour choisir aléatoirement un fichier audio
+    function getRandomAudio() {
+      var audioFiles = [
+        "https://ayprx.github.io/Music_1.mp3",
+        "https://ayprx.github.io/Music_1.mp3",
+        // Ajoutez d'autres URL de fichiers audio selon vos besoins
+      ];
+
+      var randomIndex = Math.floor(Math.random() * audioFiles.length);
+      return audioFiles[randomIndex];
+    }
+
+    // Appeler les fonctions après le chargement de la page
+    window.onload = function () {
+      addMatrixSymbols();
+      setInterval(addMatrixPhotos, 5000); // Ajouter une image toutes les 5 secondes
+      setInterval(updateCountdown, 1000);
+
+      // Lancer l'audio aléatoire
+      var audio = new Audio(getRandomAudio());
+      audio.loop = true; // Pour le faire jouer en boucle
+      audio.play();
+
+      // Associer l'élément audio à la fonction showEndVideo lorsque la lecture est terminée
+      audio.addEventListener("ended", showEndVideo);
+    };
+  </script>
+</head>
+<body>
+
+  <h1 id="countdown">Compte à Rebours</h1>
+
+  <!-- Vidéo à la fin du compte à rebours -->
+  <video id="end-video" src="url_de_votre_video.mp4" autoplay loop muted></video>
+
+</body>
+</html>
