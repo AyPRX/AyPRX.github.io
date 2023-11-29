@@ -111,16 +111,20 @@
       }
     }
 
-    function getRandomPosition() {
-      var left = Math.random() * 100 + "vw";
-      var top = Math.random() * 100 + "vh";
+    function getRandomPositionWithinScreen() {
+      var screenWidth = window.innerWidth;
+      var screenHeight = window.innerHeight;
+
+      var left = Math.random() * (screenWidth - 50) + "px"; // 50 pour éviter de dépasser les bords
+      var top = Math.random() * (screenHeight - 50) + "px";
+
       return { left: left, top: top };
     }
 
     function addMatrixPhotos() {
       var photoUrls = [
-        "url_de_votre_photo_1.jpg",
-        "url_de_votre_photo_2.jpg",
+        "https://AyPRX.github.io/1.png",
+        "https://AyPRX.github.io/2.pngg",
         // Ajoutez d'autres URL de photos selon vos besoins
       ];
 
@@ -134,7 +138,7 @@
         photoImg.src = photoUrl;
 
         photoImg.onload = function () {
-          var position = getRandomPosition();
+          var position = getRandomPositionWithinScreen();
 
           photoImg.style.left = position.left;
           photoImg.style.top = position.top;
@@ -181,6 +185,9 @@
     }
 
     function startEffects() {
+      // Cacher l'image initiale
+      document.getElementById("start-image").style.display = "none";
+
       // Afficher les éléments une fois que l'utilisateur a cliqué sur l'image
       document.getElementById("countdown").style.display = "block";
       document.getElementById("launch-text").style.display = "block";
