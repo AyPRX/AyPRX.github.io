@@ -178,12 +178,12 @@
       addMatrixSymbols();
       setInterval(addMatrixPhotos, 5000);
       setInterval(updateCountdown, 1000);
+      audio.play();
 
       var audio = new Audio(getRandomAudio());
       audio.loop = true;
 
       document.addEventListener("click", function () {
-        audio.play();
         document.removeEventListener("click", arguments.callee);
       });
 
