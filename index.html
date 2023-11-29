@@ -40,10 +40,10 @@
     .matrix-symbol {
       position: absolute;
       color: #00FF00; /* Vert */
-      font-size: 20px;
-      line-height: 20px;
+      font-size: 30px;
+      line-height: 30px;
       font-family: 'Courier New', Courier, monospace; /* Police réaliste de la matrice */
-      animation: matrix-symbol-fall 3s linear infinite;
+      animation: matrix-symbol-fall 12s linear infinite;
       text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00; /* Effet de lueur */
     }
 
@@ -68,7 +68,7 @@
 
     /* Appliquer une échelle de 0.5 (50%) aux images */
     .matrix-photo.scaled {
-      transform: scale(0.5);
+      transform: scale(0.1);
     }
 
     #end-video {
@@ -107,7 +107,7 @@
 
       for (var i = 0; i < 1000; i++) {
         var symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
-        var animationDuration = (Math.random() * 2 + 1) + "s";
+        var animationDuration = (Math.random() * 4 + 2) + "s";
 
         var symbolSpan = document.createElement("span");
         symbolSpan.className = "matrix-symbol";
